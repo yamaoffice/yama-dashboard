@@ -140,11 +140,6 @@
     </div>
     <section class="block">
       <p class="eyebrow">Sales · Net Sales</p>
-      <div class="tiles3">
-        <div class="card tile"><span class="label" id="t-daily-label"></span><div class="big num" id="t-daily">—</div><div class="meta">vs <span id="t-daily-prev-label"></span> <span id="t-daily-d"></span></div></div>
-        <div class="card tile"><span class="label" id="t-weekly-label"></span><div class="big num" id="t-weekly">—</div><div class="meta">Last week full: <span class="num" id="t-weekly-full"></span></div></div>
-        <div class="card tile"><span class="label">Pay Period (Bi-weekly)</span><div class="big num" id="t-pp">—</div><div class="meta"><span id="t-pp-period"></span> · <span id="t-pp-status"></span></div><div class="progress"><i id="t-pp-bar"></i></div></div>
-      </div>
       <div class="card chart-card">
         <div class="chart-head"><h3>Daily Net Sales</h3><span class="hint">Last 14 days</span></div>
         <div class="canvas-box"><canvas id="salesChart"></canvas></div>
@@ -268,20 +263,6 @@ function render(){
   const last=vals.length-1;
   $('#spark').innerHTML='<defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+col+'" stop-opacity=".18"/><stop offset="100%" stop-color="'+col+'" stop-opacity="0"/></linearGradient></defs><polygon points="'+area+'" fill="url(#sg)"/><polyline points="'+pts+'" fill="none" stroke="'+col+'" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="'+x(last).toFixed(1)+'" cy="'+y(vals[last]).toFixed(1)+'" r="3.6" fill="'+col+'" stroke="#fff" stroke-width="2"/>';
   $('#sparkStart').textContent=sdata[0].date;$('#sparkEnd').textContent=sdata[last].date;
-
-  $('#t-daily-label').textContent=DL.asOf;
-  $('#t-daily').textContent=fmtD(D.daily.today);
-  $('#t-daily-prev-label').textContent=DL.yesterday;
-  $('#t-daily-d').innerHTML=deltaHTML(D.daily.today,D.daily.yesterday);
-  $('#t-weekly-label').textContent='This Week ('+DL.weekRange+')';
-  $('#t-weekly').textContent=fmt(D.weekly.wtd);
-  $('#t-weekly-full').textContent=fmt(D.weekly.lastWeekFull);
-  $('#t-pp').textContent=fmt(D.payPeriod.ptd);
-  $('#t-pp-period').textContent=D.payPeriod.label;
-  var ppDone=D.payPeriod.daysElapsed>=D.payPeriod.daysTotal;
-  $('#t-pp-status').textContent=ppDone?'\u2714 Complete':'Projected: '+fmt(D.payPeriod.projected);
-  $('#t-pp-bar').style.width=Math.min(100,D.payPeriod.daysElapsed/D.payPeriod.daysTotal*100).toFixed(0)+'%';
-  $('#t-pp-bar').style.background=col;
 
   $('#c-mtd').textContent=fmtD(D.month.mtd);
   $('#c-mom-d').innerHTML=deltaHTML(D.month.mtd,D.month.lastMonthSamePoint);
