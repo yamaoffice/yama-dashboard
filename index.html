@@ -175,7 +175,7 @@
    ═══════════════════════════════════════════════════════════ */
 const API_URL = "https://script.google.com/macros/s/AKfycbzPzcSusTb5xbrajXFanzbJPDXU8TKWdaW5MHLZEiHxCFl8Ty2m3Qqr_5rYtXbnQchOIA/exec";
 
-let RAW, LOCS, DL;
+let RAW, LOCS;
 let curLoc = 'All', curPeriod = 'daily';
 
 const $ = s => document.querySelector(s);
@@ -200,15 +200,10 @@ async function loadData() {
     }
 
     LOCS = RAW.locations;
-    DL = RAW.dateLabels;
 
     // 로딩 숨기고 대시보드 표시
     $('#loadingState').style.display = 'none';
     $('#dashContent').style.display = 'block';
-    $('#statusBadge').textContent = 'Last updated: ' + DL.asOfFull;
-    $('#statusBadge').className = 'update-note';
-    $('#segDaily').textContent = DL.asOf;
-    $('#cmpYear').textContent = RAW.asOf.substring(0,4);
 
     // 이벤트 리스너 설정
     document.querySelectorAll('.loc-btn').forEach(b => {
@@ -239,6 +234,14 @@ async function loadData() {
 
 function render(){
   const D=LOCS[curLoc], col=locColor(curLoc);
+  const DL=D.dateLabels;
+
+  // 날짜 배지 & 토글 버튼 업데이트 (지점마다 다를 수 있음)
+  $('#statusBadge').textContent='Last updated: '+DL.asOfFull;
+  $('#statusBadge').className='update-note';
+  $('#segDaily').textContent=DL.asOf;
+  $('#cmpYear').textContent=DL.asOfFull.split('/').pop();
+
   const HERO={
     daily:{label:'Net Sales — '+DL.asOf, value:D.daily.today, chips:[
       {t:'vs '+DL.yesterday,cur:D.daily.today,prev:D.daily.yesterday},
