@@ -10,14 +10,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root{
-    --canvas:#FAFAF8; --surface:#FFFFFF;
-    --ink:#16181D; --ink-2:#3A3F4A; --muted:#6B7280;
-    --line:#ECECE6; --line-2:#F3F3EE;
-    --accent:#047857; --accent-soft:#ECFDF5;
-    --y1:#047857; --y2:#2563EB; --y4:#D97706;
-    --pos:#047857; --neg:#C0392B;
-    --amber:#B45309; --slate:#52606D;
-    --shadow:0 1px 2px rgba(16,24,40,.03), 0 2px 6px rgba(16,24,40,.05);
+    --canvas:#FAFAF8;--surface:#FFFFFF;
+    --ink:#16181D;--ink-2:#3A3F4A;--muted:#6B7280;
+    --line:#ECECE6;--line-2:#F3F3EE;
+    --accent:#047857;--accent-soft:#ECFDF5;
+    --y1:#047857;--y2:#2563EB;--y4:#D97706;
+    --pos:#047857;--neg:#C0392B;
+    --amber:#B45309;--slate:#52606D;
+    --shadow:0 1px 2px rgba(16,24,40,.03),0 2px 6px rgba(16,24,40,.05);
     --radius:14px;
     --font-display:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;
     --font-ui:'Inter',ui-sans-serif,system-ui,-apple-system,sans-serif;
@@ -26,7 +26,6 @@
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:var(--font-ui);background:var(--canvas);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5;padding:0 0 64px}
   .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
-
   header{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:26px 0 22px;border-bottom:1px solid var(--line)}
   .mark{width:38px;height:38px;border-radius:10px;background:var(--ink);display:grid;place-items:center;flex:0 0 auto}
   .mark svg{width:20px;height:20px}
@@ -34,40 +33,25 @@
   .brand .name{font-family:var(--font-display);font-weight:600;font-size:18px;letter-spacing:-.01em}
   .brand .sub{font-size:12px;color:var(--muted)}
   .spacer{flex:1}
-  .asof{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
-
-  /* Location tabs */
+  .update-note{font-size:11.5px;color:var(--amber);background:#FEF6EC;border:1px solid #F6E3C4;padding:5px 10px;border-radius:8px}
+  .status-live{font-size:11.5px;color:var(--pos);background:var(--accent-soft);border:1px solid #A7F3D0;padding:5px 10px;border-radius:8px}
   .loc-bar{display:flex;gap:6px;padding:18px 0 6px;flex-wrap:wrap}
-  .loc-btn{
-    font-family:var(--font-ui);font-size:13px;font-weight:500;color:var(--ink-2);
-    border:1px solid var(--line);background:var(--surface);padding:8px 18px;border-radius:10px;cursor:pointer;
-    transition:all .15s;
-  }
+  .loc-btn{font-family:var(--font-ui);font-size:13px;font-weight:500;color:var(--ink-2);border:1px solid var(--line);background:var(--surface);padding:8px 18px;border-radius:10px;cursor:pointer;transition:all .15s}
   .loc-btn:hover{border-color:var(--ink-2);color:var(--ink)}
   .loc-btn.active{background:var(--ink);color:#fff;border-color:var(--ink);font-weight:600}
   .loc-btn[data-loc="Yama 1"].active{background:var(--y1);border-color:var(--y1)}
   .loc-btn[data-loc="Yama 2"].active{background:var(--y2);border-color:var(--y2)}
   .loc-btn[data-loc="Yama 4"].active{background:var(--y4);border-color:var(--y4)}
-
-  .eyebrow{
-    font-size:11.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
-    color:var(--muted);margin:0 0 14px;display:flex;align-items:center;gap:10px;
-  }
+  .eyebrow{font-size:11.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:0 0 14px;display:flex;align-items:center;gap:10px}
   .eyebrow::after{content:"";flex:1;height:1px;background:var(--line)}
   section.block{padding:30px 0 4px}
   .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
   .label{font-size:12.5px;color:var(--muted);font-weight:500}
   .num{font-family:var(--font-mono);font-weight:600;letter-spacing:-.02em;color:var(--ink);font-feature-settings:"tnum"}
-
-  /* Hero */
   .hero{display:grid;grid-template-columns:1.45fr 1fr;gap:18px;margin-top:18px}
   .hero-main{padding:24px 26px 22px;display:flex;flex-direction:column}
   .seg{display:inline-flex;background:var(--line-2);border-radius:10px;padding:3px;gap:2px;align-self:flex-start}
-  .seg button{
-    font-family:var(--font-ui);font-size:13px;font-weight:500;color:var(--ink-2);
-    border:0;background:transparent;padding:7px 14px;border-radius:8px;cursor:pointer;
-    transition:background .15s,color .15s,box-shadow .15s;
-  }
+  .seg button{font-family:var(--font-ui);font-size:13px;font-weight:500;color:var(--ink-2);border:0;background:transparent;padding:7px 14px;border-radius:8px;cursor:pointer;transition:background .15s,color .15s,box-shadow .15s}
   .seg button:hover{color:var(--ink)}
   .seg button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow);font-weight:600}
   #heroLabel{margin-top:20px;font-size:13.5px;color:var(--muted);font-weight:500}
@@ -82,8 +66,6 @@
   .spark-wrap .label{margin-bottom:auto}
   svg.spark{width:100%;height:120px;display:block;overflow:visible}
   .spark-foot{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;color:var(--muted);margin-top:10px}
-
-  /* Tiles */
   .tiles3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
   .tile{padding:20px 22px}
   .tile .label{display:block;margin-bottom:12px}
@@ -92,14 +74,11 @@
   .tile .meta .num{font-size:12.5px}
   .progress{height:6px;border-radius:99px;background:var(--line-2);margin-top:14px;overflow:hidden}
   .progress i{display:block;height:100%;border-radius:99px;background:var(--accent)}
-
   .chart-card{padding:20px 22px 14px;margin-top:18px}
   .chart-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
   .chart-head h3{font-family:var(--font-display);font-size:15px;font-weight:600}
   .chart-head .hint{font-size:12px;color:var(--muted)}
   .canvas-box{position:relative;height:230px}
-
-  /* Comparison */
   .cmp-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
   .cmp-card{padding:22px 24px}
   .cmp-card .label{display:block;margin-bottom:12px}
@@ -109,13 +88,12 @@
   .cmp-chart{margin-top:18px}
   .cmp-chart .canvas-box{height:200px}
   .no-data{font-size:12px;color:var(--muted);font-style:italic}
-
-  /* Placeholder sections */
   .placeholder{padding:28px 24px;border:2px dashed var(--line);border-radius:var(--radius);text-align:center;color:var(--muted);font-size:13.5px}
   .placeholder strong{color:var(--ink-2)}
-
   footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
-
+  .loading{text-align:center;padding:80px 20px;color:var(--muted);font-size:15px}
+  .loading .spinner{width:32px;height:32px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+  @keyframes spin{to{transform:rotate(360deg)}}
   @media(max-width:880px){.hero{grid-template-columns:1fr}.cmp-row{grid-template-columns:1fr}}
   @media(max-width:560px){.wrap{padding:0 16px}.tiles3{grid-template-columns:1fr}}
 </style>
@@ -124,240 +102,204 @@
 <div class="wrap">
   <header>
     <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M10 19V5M16 19v-6M22 19h-22"/></svg></div>
-    <div class="brand">
-      <span class="name">Yama Restaurant Group</span>
-      <span class="sub">Sales Dashboard</span>
-    </div>
+    <div class="brand"><span class="name">Yama Restaurant Group</span><span class="sub">Sales Dashboard</span></div>
     <div class="spacer"></div>
-    <span class="asof">As of 6/22/2026 (Mon)</span>
+    <span class="update-note" id="statusBadge">Loading...</span>
   </header>
 
-  <div class="loc-bar" id="locBar">
-    <button class="loc-btn active" data-loc="All">All Locations</button>
-    <button class="loc-btn" data-loc="Yama 1">Yama 1</button>
-    <button class="loc-btn" data-loc="Yama 2">Yama 2</button>
-    <button class="loc-btn" data-loc="Yama 4">Yama 4</button>
+  <!-- Loading state -->
+  <div class="loading" id="loadingState">
+    <div class="spinner"></div>
+    Google Sheets에서 최신 데이터를 불러오는 중...
   </div>
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="card hero-main">
-      <div class="seg" role="tablist">
-        <button role="tab" aria-selected="true" data-period="today">Today</button>
-        <button role="tab" aria-selected="false" data-period="week">This Week</button>
-        <button role="tab" aria-selected="false" data-period="payperiod">Pay Period</button>
+  <!-- Dashboard content (hidden until data loads) -->
+  <div id="dashContent" style="display:none">
+    <div class="loc-bar">
+      <button class="loc-btn active" data-loc="All">All Locations</button>
+      <button class="loc-btn" data-loc="Yama 1">Yama 1</button>
+      <button class="loc-btn" data-loc="Yama 2">Yama 2</button>
+      <button class="loc-btn" data-loc="Yama 4">Yama 4</button>
+    </div>
+    <div class="hero">
+      <div class="card hero-main">
+        <div class="seg" role="tablist">
+          <button role="tab" aria-selected="true" data-period="daily" id="segDaily"></button>
+          <button role="tab" aria-selected="false" data-period="week">This Week</button>
+          <button role="tab" aria-selected="false" data-period="payperiod">Pay Period</button>
+        </div>
+        <div id="heroLabel"></div>
+        <div id="heroValue" class="num">—</div>
+        <div class="chips" id="heroChips"></div>
       </div>
-      <div id="heroLabel">Today's Net Sales</div>
-      <div id="heroValue" class="num">—</div>
-      <div class="chips" id="heroChips"></div>
+      <div class="card spark-wrap">
+        <span class="label">Last 14 Days — Daily Net Sales</span>
+        <svg class="spark" id="spark" viewBox="0 0 300 120" preserveAspectRatio="none"></svg>
+        <div class="spark-foot"><span id="sparkStart"></span><span id="sparkEnd"></span></div>
+      </div>
     </div>
-    <div class="card spark-wrap">
-      <span class="label">Last 14 Days — Daily Net Sales</span>
-      <svg class="spark" id="spark" viewBox="0 0 300 120" preserveAspectRatio="none"></svg>
-      <div class="spark-foot"><span id="sparkStart"></span><span id="sparkEnd"></span></div>
-    </div>
+    <section class="block">
+      <p class="eyebrow">Sales · Net Sales</p>
+      <div class="tiles3">
+        <div class="card tile"><span class="label" id="t-daily-label"></span><div class="big num" id="t-daily">—</div><div class="meta">vs <span id="t-daily-prev-label"></span> <span id="t-daily-d"></span></div></div>
+        <div class="card tile"><span class="label" id="t-weekly-label"></span><div class="big num" id="t-weekly">—</div><div class="meta">Last week full: <span class="num" id="t-weekly-full"></span></div></div>
+        <div class="card tile"><span class="label">Pay Period (Bi-weekly)</span><div class="big num" id="t-pp">—</div><div class="meta"><span id="t-pp-period"></span> · <span id="t-pp-status"></span></div><div class="progress"><i id="t-pp-bar"></i></div></div>
+      </div>
+      <div class="card chart-card">
+        <div class="chart-head"><h3>Daily Net Sales</h3><span class="hint">Last 14 days</span></div>
+        <div class="canvas-box"><canvas id="salesChart"></canvas></div>
+      </div>
+    </section>
+    <section class="block">
+      <p class="eyebrow">Comparison · Month &amp; Year</p>
+      <div class="cmp-row">
+        <div class="card cmp-card"><span class="label" id="c-mtd-label">MTD</span><div class="big num" id="c-mtd">—</div><div class="row"><span>Last month same point</span><span id="c-mom-d"></span></div><div class="row"><span>Last month full</span><span class="num" id="c-lm-full"></span></div></div>
+        <div class="card cmp-card"><span class="label">Year to Date (YTD)</span><div class="big num" id="c-ytd">—</div><div class="row" id="c-yoy-row"><span>vs Last year</span><span id="c-yoy-d"></span></div><div class="row" id="c-ly-row"><span>Last year YTD</span><span class="num" id="c-ly-full"></span></div></div>
+      </div>
+      <div class="card chart-card cmp-chart">
+        <div class="chart-head"><h3>Monthly Net Sales</h3><span class="hint" id="cmpYear">2026</span></div>
+        <div class="canvas-box"><canvas id="cmpChart"></canvas></div>
+      </div>
+    </section>
+    <section class="block">
+      <p class="eyebrow">Expense · Coming Soon</p>
+      <div class="placeholder"><strong>Vendor Expense · Credit Card · Payroll</strong><br>다음 단계에서 연결 예정</div>
+    </section>
+    <section class="block">
+      <p class="eyebrow">Financial Status · Coming Soon</p>
+      <div class="placeholder"><strong>Cash · Checking · Savings</strong><br>추후 시트 설계 후 연결 예정</div>
+    </section>
   </div>
 
-  <!-- SALES -->
-  <section class="block">
-    <p class="eyebrow">Sales · Net Sales</p>
-    <div class="tiles3">
-      <div class="card tile"><span class="label">Daily (Today)</span><div class="big num" id="t-daily">—</div><div class="meta">vs Yesterday <span id="t-daily-d"></span></div></div>
-      <div class="card tile"><span class="label">Weekly (Mon – Today)</span><div class="big num" id="t-weekly">—</div><div class="meta">Last week full: <span class="num" id="t-weekly-full"></span></div></div>
-      <div class="card tile">
-        <span class="label">Pay Period (Bi-weekly)</span>
-        <div class="big num" id="t-pp">—</div>
-        <div class="meta"><span id="t-pp-period"></span> · Projected: <span class="num" id="t-pp-proj"></span></div>
-        <div class="progress"><i id="t-pp-bar"></i></div>
-      </div>
-    </div>
-    <div class="card chart-card">
-      <div class="chart-head"><h3>Daily Net Sales</h3><span class="hint">Last 14 days</span></div>
-      <div class="canvas-box"><canvas id="salesChart"></canvas></div>
-    </div>
-  </section>
-
-  <!-- COMPARISON -->
-  <section class="block">
-    <p class="eyebrow">Comparison · Month &amp; Year</p>
-    <div class="cmp-row">
-      <div class="card cmp-card">
-        <span class="label">This Month (MTD)</span>
-        <div class="big num" id="c-mtd">—</div>
-        <div class="row"><span>Last month same point</span><span id="c-mom-d"></span></div>
-        <div class="row"><span>Last month full</span><span class="num" id="c-lm-full"></span></div>
-      </div>
-      <div class="card cmp-card">
-        <span class="label">Year to Date (YTD)</span>
-        <div class="big num" id="c-ytd">—</div>
-        <div class="row" id="c-yoy-row"><span>vs Last year</span><span id="c-yoy-d"></span></div>
-        <div class="row" id="c-ly-row"><span>Last year YTD</span><span class="num" id="c-ly-full"></span></div>
-      </div>
-    </div>
-    <div class="card chart-card cmp-chart">
-      <div class="chart-head"><h3>Monthly Net Sales</h3><span class="hint">2026</span></div>
-      <div class="canvas-box"><canvas id="cmpChart"></canvas></div>
-    </div>
-  </section>
-
-  <!-- PLACEHOLDERS -->
-  <section class="block">
-    <p class="eyebrow">Expense · Coming Soon</p>
-    <div class="placeholder"><strong>Vendor Expense · Credit Card · Payroll</strong><br>다음 단계에서 연결 예정</div>
-  </section>
-  <section class="block">
-    <p class="eyebrow">Financial Status · Coming Soon</p>
-    <div class="placeholder"><strong>Cash · Checking · Savings</strong><br>추후 시트 설계 후 연결 예정</div>
-  </section>
-
-  <footer>Data source: Yama Daily Sales (Google Sheets) · Net Sales = CC + Backup + Gift + Delivery + Cash To Office − Tax</footer>
+  <footer>Data source: Yama Daily Sales (Google Sheets · Live) · Net Sales = CC + Backup + Gift + Delivery + Cash To Office − Tax</footer>
 </div>
 
 <script>
-const RAW = {"asOf": "2026-06-22", "locations": {"All": {"daily": {"today": 13518.56, "yesterday": 37228.97, "sameDayLW": 13915.07}, "weekly": {"wtd": 13518.56, "lastWeekSamePoint": 13915.07, "lastWeekFull": 155164.54}, "payPeriod": {"ptd": 168683.1, "projected": 295195.42, "label": "6/15 – 6/28", "daysElapsed": 8, "daysTotal": 14}, "month": {"mtd": 425482.91, "lastMonthSamePoint": 511174.31, "lastMonthFull": 750283.24}, "year": {"ytd": 3768337.86, "lastYtd": 0.0}, "monthlySeries": [{"month": "Jan", "cur": 681402.39, "prev": 0.0}, {"month": "Feb", "cur": 598645.78, "prev": 0.0}, {"month": "Mar", "cur": 684798.11, "prev": 0.0}, {"month": "Apr", "cur": 627725.43, "prev": 0.0}, {"month": "May", "cur": 750283.24, "prev": 0.0}, {"month": "Jun", "cur": 425482.91, "prev": 0.0}], "dailySeries": [{"date": "6/09", "sales": 13535.37}, {"date": "6/10", "sales": 14336.12}, {"date": "6/11", "sales": 10725.16}, {"date": "6/12", "sales": 25154.69}, {"date": "6/13", "sales": 25393.71}, {"date": "6/14", "sales": 22722.12}, {"date": "6/15", "sales": 13915.07}, {"date": "6/16", "sales": 14161.54}, {"date": "6/17", "sales": 14987.83}, {"date": "6/18", "sales": 16553.91}, {"date": "6/19", "sales": 25860.31}, {"date": "6/20", "sales": 32456.91}, {"date": "6/21", "sales": 37228.97}, {"date": "6/22", "sales": 13518.56}]}, "Yama 1": {"daily": {"today": 3354.61, "yesterday": 9596.76, "sameDayLW": 2865.72}, "weekly": {"wtd": 3354.61, "lastWeekSamePoint": 2865.72, "lastWeekFull": 38184.36}, "payPeriod": {"ptd": 41538.97, "projected": 72693.2, "label": "6/15 – 6/28", "daysElapsed": 8, "daysTotal": 14}, "month": {"mtd": 99406.9, "lastMonthSamePoint": 122499.71, "lastMonthFull": 181907.25}, "year": {"ytd": 935704.04, "lastYtd": 0.0}, "monthlySeries": [{"month": "Jan", "cur": 173855.91, "prev": 0.0}, {"month": "Feb", "cur": 153945.07, "prev": 0.0}, {"month": "Mar", "cur": 169207.53, "prev": 0.0}, {"month": "Apr", "cur": 157381.38, "prev": 0.0}, {"month": "May", "cur": 181907.25, "prev": 0.0}, {"month": "Jun", "cur": 99406.9, "prev": 0.0}], "dailySeries": [{"date": "6/09", "sales": 3458.71}, {"date": "6/10", "sales": 3235.59}, {"date": "6/11", "sales": 66.68}, {"date": "6/12", "sales": 4545.28}, {"date": "6/13", "sales": 6136.47}, {"date": "6/14", "sales": 6569.05}, {"date": "6/15", "sales": 2865.72}, {"date": "6/16", "sales": 3289.69}, {"date": "6/17", "sales": 3469.58}, {"date": "6/18", "sales": 4921.7}, {"date": "6/19", "sales": 6563.49}, {"date": "6/20", "sales": 7477.42}, {"date": "6/21", "sales": 9596.76}, {"date": "6/22", "sales": 3354.61}]}, "Yama 2": {"daily": {"today": 6073.19, "yesterday": 11535.24, "sameDayLW": 5025.1}, "weekly": {"wtd": 6073.19, "lastWeekSamePoint": 5025.1, "lastWeekFull": 55456.29}, "payPeriod": {"ptd": 61529.48, "projected": 107676.59, "label": "6/15 – 6/28", "daysElapsed": 8, "daysTotal": 14}, "month": {"mtd": 158613.47, "lastMonthSamePoint": 178913.86, "lastMonthFull": 274686.69}, "year": {"ytd": 1365462.48, "lastYtd": 0.0}, "monthlySeries": [{"month": "Jan", "cur": 249648.16, "prev": 0.0}, {"month": "Feb", "cur": 204948.75, "prev": 0.0}, {"month": "Mar", "cur": 244095.32, "prev": 0.0}, {"month": "Apr", "cur": 233470.09, "prev": 0.0}, {"month": "May", "cur": 274686.69, "prev": 0.0}, {"month": "Jun", "cur": 158613.47, "prev": 0.0}], "dailySeries": [{"date": "6/09", "sales": 5089.09}, {"date": "6/10", "sales": 5549.22}, {"date": "6/11", "sales": 5333.58}, {"date": "6/12", "sales": 10236.74}, {"date": "6/13", "sales": 10445.89}, {"date": "6/14", "sales": 7350.16}, {"date": "6/15", "sales": 5025.1}, {"date": "6/16", "sales": 6188.51}, {"date": "6/17", "sales": 5380.85}, {"date": "6/18", "sales": 5060.9}, {"date": "6/19", "sales": 9734.85}, {"date": "6/20", "sales": 12530.84}, {"date": "6/21", "sales": 11535.24}, {"date": "6/22", "sales": 6073.19}]}, "Yama 4": {"daily": {"today": 4090.76, "yesterday": 16096.97, "sameDayLW": 6024.25}, "weekly": {"wtd": 4090.76, "lastWeekSamePoint": 6024.25, "lastWeekFull": 61523.89}, "payPeriod": {"ptd": 65614.65, "projected": 114825.64, "label": "6/15 – 6/28", "daysElapsed": 8, "daysTotal": 14}, "month": {"mtd": 167462.54, "lastMonthSamePoint": 209760.74, "lastMonthFull": 293689.3}, "year": {"ytd": 1467171.34, "lastYtd": 0.0}, "monthlySeries": [{"month": "Jan", "cur": 257898.32, "prev": 0.0}, {"month": "Feb", "cur": 239751.96, "prev": 0.0}, {"month": "Mar", "cur": 271495.26, "prev": 0.0}, {"month": "Apr", "cur": 236873.96, "prev": 0.0}, {"month": "May", "cur": 293689.3, "prev": 0.0}, {"month": "Jun", "cur": 167462.54, "prev": 0.0}], "dailySeries": [{"date": "6/09", "sales": 4987.57}, {"date": "6/10", "sales": 5551.31}, {"date": "6/11", "sales": 5324.9}, {"date": "6/12", "sales": 10372.67}, {"date": "6/13", "sales": 8811.35}, {"date": "6/14", "sales": 8802.91}, {"date": "6/15", "sales": 6024.25}, {"date": "6/16", "sales": 4683.34}, {"date": "6/17", "sales": 6137.4}, {"date": "6/18", "sales": 6571.31}, {"date": "6/19", "sales": 9561.97}, {"date": "6/20", "sales": 12448.65}, {"date": "6/21", "sales": 16096.97}, {"date": "6/22", "sales": 4090.76}]}}};
-const LOCS = RAW.locations;
-let curLoc = 'All';
-let curPeriod = 'today';
+/* ═══════════════════════════════════════════════════════════
+   LIVE DATA — Apps Script 웹앱에서 매번 최신 데이터를 가져옵니다
+   ═══════════════════════════════════════════════════════════ */
+const API_URL = "https://script.google.com/macros/s/AKfycbzPzcSusTb5xbrajXFanzbJPDXU8TKWdaW5MHLZEiHxCFl8Ty2m3Qqr_5rYtXbnQchOIA/exec";
+
+let RAW, LOCS, DL;
+let curLoc = 'All', curPeriod = 'daily';
 
 const $ = s => document.querySelector(s);
 const fmt = n => '$' + Math.round(n).toLocaleString('en-US');
-const fmtD = n => '$' + n.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+const fmtD = n => '$' + n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 const pct = (c,p) => p===0 ? null : ((c-p)/p)*100;
-function deltaHTML(c,p){
-  const v=pct(c,p);
-  if(v===null) return '<span class="no-data">N/A</span>';
-  const up=v>=0, cls=up?'pos':'neg', arr=up?'▲':'▼';
-  return '<span class="'+cls+'"><span class="arrow">'+arr+'</span> '+Math.abs(v).toFixed(1)+'%</span>';
-}
+function deltaHTML(c,p){const v=pct(c,p);if(v===null)return'<span class="no-data">N/A</span>';const up=v>=0,cls=up?'pos':'neg',arr=up?'\u25B2':'\u25BC';return'<span class="'+cls+'"><span class="arrow">'+arr+'</span> '+Math.abs(v).toFixed(1)+'%</span>'}
 const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-function locColor(loc){
-  if(loc==='Yama 1') return css('--y1');
-  if(loc==='Yama 2') return css('--y2');
-  if(loc==='Yama 4') return css('--y4');
-  return css('--accent');
-}
+function locColor(l){if(l==='Yama 1')return css('--y1');if(l==='Yama 2')return css('--y2');if(l==='Yama 4')return css('--y4');return css('--accent')}
 
-let salesChartInst, cmpChartInst;
+let salesCI, cmpCI;
+
+// ── 데이터 로드 ──
+async function loadData() {
+  try {
+    const res = await fetch(API_URL);
+    RAW = await res.json();
+
+    if (RAW.error) {
+      $('#loadingState').innerHTML = '<div style="color:var(--neg)">Error: ' + RAW.error + '</div>';
+      return;
+    }
+
+    LOCS = RAW.locations;
+    DL = RAW.dateLabels;
+
+    // 로딩 숨기고 대시보드 표시
+    $('#loadingState').style.display = 'none';
+    $('#dashContent').style.display = 'block';
+    $('#statusBadge').textContent = 'Last updated: ' + DL.asOfFull;
+    $('#statusBadge').className = 'update-note';
+    $('#segDaily').textContent = DL.asOf;
+    $('#cmpYear').textContent = RAW.asOf.substring(0,4);
+
+    // 이벤트 리스너 설정
+    document.querySelectorAll('.loc-btn').forEach(b => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('.loc-btn').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+        curLoc = b.dataset.loc;
+        render();
+      });
+    });
+    document.querySelectorAll('.seg button').forEach(b => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-selected','false'));
+        b.setAttribute('aria-selected','true');
+        curPeriod = b.dataset.period;
+        render();
+      });
+    });
+
+    Chart.defaults.font.family = 'Inter, sans-serif';
+    Chart.defaults.font.size = 11;
+    Chart.defaults.color = css('--muted');
+    render();
+  } catch (e) {
+    $('#loadingState').innerHTML = '<div style="color:var(--neg)">데이터를 불러올 수 없습니다.<br><small>' + e.message + '</small></div>';
+  }
+}
 
 function render(){
-  const D = LOCS[curLoc];
-  const col = locColor(curLoc);
-
-  // HERO
-  const HERO = {
-    today:{ label:"Today's Net Sales", value:D.daily.today, chips:[
-      {t:'vs Yesterday', cur:D.daily.today, prev:D.daily.yesterday},
-      {t:'Same day last week', cur:D.daily.today, prev:D.daily.sameDayLW}]},
-    week:{ label:"This Week (Mon–Today)", value:D.weekly.wtd, chips:[
-      {t:'Last week same point', cur:D.weekly.wtd, prev:D.weekly.lastWeekSamePoint},
-      {t:'Last week full', raw:fmt(D.weekly.lastWeekFull)}]},
-    payperiod:{ label:"Pay Period ("+D.payPeriod.label+")", value:D.payPeriod.ptd, chips:[
-      {t:'Projected (full period)', raw:fmt(D.payPeriod.projected)},
-      {t:'Progress', raw:D.payPeriod.daysElapsed+' / '+D.payPeriod.daysTotal+' days'}]}
+  const D=LOCS[curLoc], col=locColor(curLoc);
+  const HERO={
+    daily:{label:'Net Sales — '+DL.asOf, value:D.daily.today, chips:[
+      {t:'vs '+DL.yesterday,cur:D.daily.today,prev:D.daily.yesterday},
+      {t:'vs '+DL.sameDayLW+' (last week)',cur:D.daily.today,prev:D.daily.sameDayLW}]},
+    week:{label:'This Week ('+DL.weekRange+')',value:D.weekly.wtd, chips:[
+      {t:'Last week same point',cur:D.weekly.wtd,prev:D.weekly.lastWeekSamePoint},
+      {t:'Last week full',raw:fmt(D.weekly.lastWeekFull)}]},
+    payperiod:{label:'Pay Period ('+D.payPeriod.label+')',value:D.payPeriod.ptd, chips:[
+      {t:D.payPeriod.daysElapsed>=D.payPeriod.daysTotal?'Period complete':'Projected (full)',raw:D.payPeriod.daysElapsed>=D.payPeriod.daysTotal?'\u2714 Complete':fmt(D.payPeriod.projected)},
+      {t:'Progress',raw:D.payPeriod.daysElapsed+' / '+D.payPeriod.daysTotal+' days'}]}
   };
   const h=HERO[curPeriod];
   $('#heroLabel').textContent=h.label;
   $('#heroValue').textContent=fmtD(h.value);
-  $('#heroChips').innerHTML=h.chips.map(c=>{
-    const val=c.raw?'<span class="cv">'+c.raw+'</span>':'<span class="cv">'+deltaHTML(c.cur,c.prev)+'</span>';
-    return '<div class="chip"><span class="ct">'+c.t+'</span>'+val+'</div>';
-  }).join('');
+  $('#heroChips').innerHTML=h.chips.map(c=>{const val=c.raw?'<span class="cv">'+c.raw+'</span>':'<span class="cv">'+deltaHTML(c.cur,c.prev)+'</span>';return'<div class="chip"><span class="ct">'+c.t+'</span>'+val+'</div>'}).join('');
 
-  // Sparkline
   const sdata=D.dailySeries, vals=sdata.map(d=>d.sales);
-  const W=300,H=120,pad=8;
-  const mn=Math.min(...vals),mx=Math.max(...vals),rng=mx-mn||1;
-  const x=i=>pad+i*(W-2*pad)/(sdata.length-1);
-  const y=v=>H-pad-(v-mn)/rng*(H-2*pad);
+  const W=300,H=120,pad=8,mn=Math.min(...vals),mx=Math.max(...vals),rng=mx-mn||1;
+  const x=i=>pad+i*(W-2*pad)/(sdata.length-1), y=v=>H-pad-(v-mn)/rng*(H-2*pad);
   const pts=vals.map((v,i)=>x(i).toFixed(1)+','+y(v).toFixed(1)).join(' ');
   const area=pad+','+H+' '+pts+' '+(W-pad)+','+H;
   const last=vals.length-1;
-  $('#spark').innerHTML=`
-    <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="${col}" stop-opacity=".18"/>
-      <stop offset="100%" stop-color="${col}" stop-opacity="0"/>
-    </linearGradient></defs>
-    <polygon points="${area}" fill="url(#sg)"/>
-    <polyline points="${pts}" fill="none" stroke="${col}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
-    <circle cx="${x(last).toFixed(1)}" cy="${y(vals[last]).toFixed(1)}" r="3.6" fill="${col}" stroke="#fff" stroke-width="2"/>`;
-  $('#sparkStart').textContent=sdata[0].date;
-  $('#sparkEnd').textContent=sdata[last].date;
+  $('#spark').innerHTML='<defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+col+'" stop-opacity=".18"/><stop offset="100%" stop-color="'+col+'" stop-opacity="0"/></linearGradient></defs><polygon points="'+area+'" fill="url(#sg)"/><polyline points="'+pts+'" fill="none" stroke="'+col+'" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="'+x(last).toFixed(1)+'" cy="'+y(vals[last]).toFixed(1)+'" r="3.6" fill="'+col+'" stroke="#fff" stroke-width="2"/>';
+  $('#sparkStart').textContent=sdata[0].date;$('#sparkEnd').textContent=sdata[last].date;
 
-  // Sales tiles
+  $('#t-daily-label').textContent=DL.asOf;
   $('#t-daily').textContent=fmtD(D.daily.today);
+  $('#t-daily-prev-label').textContent=DL.yesterday;
   $('#t-daily-d').innerHTML=deltaHTML(D.daily.today,D.daily.yesterday);
+  $('#t-weekly-label').textContent='This Week ('+DL.weekRange+')';
   $('#t-weekly').textContent=fmt(D.weekly.wtd);
   $('#t-weekly-full').textContent=fmt(D.weekly.lastWeekFull);
   $('#t-pp').textContent=fmt(D.payPeriod.ptd);
   $('#t-pp-period').textContent=D.payPeriod.label;
-  $('#t-pp-proj').textContent=fmt(D.payPeriod.projected);
+  var ppDone=D.payPeriod.daysElapsed>=D.payPeriod.daysTotal;
+  $('#t-pp-status').textContent=ppDone?'\u2714 Complete':'Projected: '+fmt(D.payPeriod.projected);
   $('#t-pp-bar').style.width=Math.min(100,D.payPeriod.daysElapsed/D.payPeriod.daysTotal*100).toFixed(0)+'%';
   $('#t-pp-bar').style.background=col;
 
-  // Comparison
   $('#c-mtd').textContent=fmtD(D.month.mtd);
   $('#c-mom-d').innerHTML=deltaHTML(D.month.mtd,D.month.lastMonthSamePoint);
   $('#c-lm-full').textContent=fmt(D.month.lastMonthFull);
   $('#c-ytd').textContent=fmt(D.year.ytd);
-  if(D.year.lastYtd>0){
-    $('#c-yoy-d').innerHTML=deltaHTML(D.year.ytd,D.year.lastYtd);
-    $('#c-ly-full').textContent=fmt(D.year.lastYtd);
-    $('#c-yoy-row').style.display='';$('#c-ly-row').style.display='';
-  } else {
-    $('#c-yoy-d').innerHTML='<span class="no-data">No prior year data</span>';
-    $('#c-ly-full').textContent='—';
-  }
+  if(D.year.lastYtd>0){$('#c-yoy-d').innerHTML=deltaHTML(D.year.ytd,D.year.lastYtd);$('#c-ly-full').textContent=fmt(D.year.lastYtd)}
+  else{$('#c-yoy-d').innerHTML='<span class="no-data">No prior year data</span>';$('#c-ly-full').textContent='\u2014'}
 
-  // Charts
   const moneyTick=v=>'$'+(v>=1000?(v/1000)+'k':v);
-  if(salesChartInst) salesChartInst.destroy();
-  salesChartInst=new Chart($('#salesChart'),{
-    type:'bar',
-    data:{labels:sdata.map(d=>d.date),datasets:[{data:vals,backgroundColor:col+'CC',borderRadius:5,barPercentage:.75}]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+fmtD(c.parsed.y)}}},
-      scales:{x:{grid:{display:false},border:{display:false}},
-        y:{grid:{color:css('--line-2')},border:{display:false},ticks:{callback:moneyTick},beginAtZero:true}}}
-  });
-
-  if(cmpChartInst) cmpChartInst.destroy();
-  const ms=D.monthlySeries;
-  cmpChartInst=new Chart($('#cmpChart'),{
-    type:'bar',
-    data:{labels:ms.map(d=>d.month),datasets:[
-      {label:'2026',data:ms.map(d=>d.cur),backgroundColor:col,borderRadius:4,barPercentage:.7,categoryPercentage:.62}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+fmt(c.parsed.y)}}},
-      scales:{x:{grid:{display:false},border:{display:false}},
-        y:{grid:{color:css('--line-2')},border:{display:false},ticks:{callback:moneyTick,maxTicksLimit:4}}}}
-  });
+  if(salesCI)salesCI.destroy();
+  salesCI=new Chart($('#salesChart'),{type:'bar',data:{labels:sdata.map(d=>d.date),datasets:[{data:vals,backgroundColor:col+'CC',borderRadius:5,barPercentage:.75}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+fmtD(c.parsed.y)}}},scales:{x:{grid:{display:false},border:{display:false}},y:{grid:{color:css('--line-2')},border:{display:false},ticks:{callback:moneyTick},beginAtZero:true}}}});
+  if(cmpCI)cmpCI.destroy();
+  var ms=D.monthlySeries;
+  cmpCI=new Chart($('#cmpChart'),{type:'bar',data:{labels:ms.map(d=>d.month),datasets:[{label:RAW.asOf.substring(0,4),data:ms.map(d=>d.cur),backgroundColor:col,borderRadius:4,barPercentage:.7,categoryPercentage:.62}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+fmt(c.parsed.y)}}},scales:{x:{grid:{display:false},border:{display:false}},y:{grid:{color:css('--line-2')},border:{display:false},ticks:{callback:moneyTick,maxTicksLimit:4}}}}});
 }
 
-// Location buttons
-document.querySelectorAll('.loc-btn').forEach(b=>{
-  b.addEventListener('click',()=>{
-    document.querySelectorAll('.loc-btn').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    curLoc=b.dataset.loc;
-    render();
-  });
-});
-
-// Period toggle
-document.querySelectorAll('.seg button').forEach(b=>{
-  b.addEventListener('click',()=>{
-    document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-selected','false'));
-    b.setAttribute('aria-selected','true');
-    curPeriod=b.dataset.period;
-    render();
-  });
-});
-
-Chart.defaults.font.family='Inter, sans-serif';
-Chart.defaults.font.size=11;
-Chart.defaults.color=css('--muted');
-render();
+// ── 시작 ──
+loadData();
 </script>
 </body>
 </html>
