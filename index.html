@@ -48,7 +48,7 @@
   .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
   .label{font-size:12.5px;color:var(--muted);font-weight:500}
   .num{font-family:var(--font-mono);font-weight:600;letter-spacing:-.02em;color:var(--ink);font-feature-settings:"tnum"}
-  .hero{display:grid;grid-template-columns:1.45fr 1fr;gap:18px;margin-top:18px}
+  .hero{margin-top:18px}
   .hero-main{padding:24px 26px 22px;display:flex;flex-direction:column}
   .seg{display:inline-flex;background:var(--line-2);border-radius:10px;padding:3px;gap:2px;align-self:flex-start}
   .seg button{font-family:var(--font-ui);font-size:13px;font-weight:500;color:var(--ink-2);border:0;background:transparent;padding:7px 14px;border-radius:8px;cursor:pointer;transition:background .15s,color .15s,box-shadow .15s}
@@ -94,7 +94,7 @@
   .loading{text-align:center;padding:80px 20px;color:var(--muted);font-size:15px}
   .loading .spinner{width:32px;height:32px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
   @keyframes spin{to{transform:rotate(360deg)}}
-  @media(max-width:880px){.hero{grid-template-columns:1fr}.cmp-row{grid-template-columns:1fr}}
+  @media(max-width:880px){.cmp-row{grid-template-columns:1fr}}
   @media(max-width:560px){.wrap{padding:0 16px}.tiles3{grid-template-columns:1fr}}
 </style>
 </head>
@@ -131,11 +131,6 @@
         <div id="heroLabel"></div>
         <div id="heroValue" class="num">—</div>
         <div class="chips" id="heroChips"></div>
-      </div>
-      <div class="card spark-wrap">
-        <span class="label">Last 14 Days — Daily Net Sales</span>
-        <svg class="spark" id="spark" viewBox="0 0 300 120" preserveAspectRatio="none"></svg>
-        <div class="spark-foot"><span id="sparkStart"></span><span id="sparkEnd"></span></div>
       </div>
     </div>
     <section class="block">
@@ -259,13 +254,6 @@ function render(){
   $('#heroChips').innerHTML=h.chips.map(c=>{const val=c.raw?'<span class="cv">'+c.raw+'</span>':'<span class="cv">'+deltaHTML(c.cur,c.prev)+'</span>';return'<div class="chip"><span class="ct">'+c.t+'</span>'+val+'</div>'}).join('');
 
   const sdata=D.dailySeries, vals=sdata.map(d=>d.sales);
-  const W=300,H=120,pad=8,mn=Math.min(...vals),mx=Math.max(...vals),rng=mx-mn||1;
-  const x=i=>pad+i*(W-2*pad)/(sdata.length-1), y=v=>H-pad-(v-mn)/rng*(H-2*pad);
-  const pts=vals.map((v,i)=>x(i).toFixed(1)+','+y(v).toFixed(1)).join(' ');
-  const area=pad+','+H+' '+pts+' '+(W-pad)+','+H;
-  const last=vals.length-1;
-  $('#spark').innerHTML='<defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+col+'" stop-opacity=".18"/><stop offset="100%" stop-color="'+col+'" stop-opacity="0"/></linearGradient></defs><polygon points="'+area+'" fill="url(#sg)"/><polyline points="'+pts+'" fill="none" stroke="'+col+'" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="'+x(last).toFixed(1)+'" cy="'+y(vals[last]).toFixed(1)+'" r="3.6" fill="'+col+'" stroke="#fff" stroke-width="2"/>';
-  $('#sparkStart').textContent=sdata[0].date;$('#sparkEnd').textContent=sdata[last].date;
 
   $('#c-mtd').textContent=fmtD(D.month.mtd);
   $('#c-mom-d').innerHTML=deltaHTML(D.month.mtd,D.month.lastMonthSamePoint);
