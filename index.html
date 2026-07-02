@@ -94,7 +94,7 @@
   .cash-card{padding:20px 22px;position:relative;overflow:hidden}
   .cash-card .label{display:block;margin-bottom:12px}
   .cash-card .big{font-family:var(--font-mono);font-weight:600;font-size:26px;letter-spacing:-.02em}
-  .cash-card.total{background:var(--ink);border-color:var(--ink)}
+  .cash-card.total{background:var(--ink);border-color:var(--ink);grid-column:1/-1}
   .cash-card.total .label{color:#A7AEBA}
   .cash-card.total .big{color:#fff}
   .cash-card .edge{position:absolute;left:0;top:0;bottom:0;width:4px}
@@ -103,8 +103,8 @@
   .loading{text-align:center;padding:80px 20px;color:var(--muted);font-size:15px}
   .loading .spinner{width:32px;height:32px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
   @keyframes spin{to{transform:rotate(360deg)}}
-  @media(max-width:880px){.cmp-row{grid-template-columns:1fr}.cash-grid{grid-template-columns:repeat(2,1fr)}.cash-card.total{grid-column:span 2}}
-  @media(max-width:560px){.wrap{padding:0 16px}.tiles3{grid-template-columns:1fr}.cash-grid{grid-template-columns:1fr}.cash-card.total{grid-column:span 1}}
+  @media(max-width:880px){.cmp-row{grid-template-columns:1fr}.cash-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.wrap{padding:0 16px}.tiles3{grid-template-columns:1fr}.cash-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -171,7 +171,7 @@
         <div class="card cash-card"><i class="edge" style="background:var(--y1)"></i><span class="label">Yama 1</span><div class="big num" id="cash-y1">—</div><div class="cash-date" id="cash-date-y1"></div></div>
         <div class="card cash-card"><i class="edge" style="background:var(--y2)"></i><span class="label">Yama 2</span><div class="big num" id="cash-y2">—</div><div class="cash-date" id="cash-date-y2"></div></div>
         <div class="card cash-card"><i class="edge" style="background:var(--y4)"></i><span class="label">Yama 4</span><div class="big num" id="cash-y4">—</div><div class="cash-date" id="cash-date-y4"></div></div>
-        <div class="card cash-card total" style="grid-column:span 4"><span class="label">Total Cash on Hand</span><div class="big num" id="cash-total">—</div></div>
+        <div class="card cash-card total"><span class="label">Total Cash on Hand</span><div class="big num" id="cash-total">—</div></div>
       </div>
     </section>
   </div>
