@@ -161,8 +161,20 @@
       </div>
     </section>
     <section class="block">
-      <p class="eyebrow">Expense · Coming Soon</p>
-      <div class="placeholder"><strong>Vendor Expense · Credit Card · Payroll</strong><br>다음 단계에서 연결 예정</div>
+      <p class="eyebrow">Expense · Vendor</p>
+      <div class="cmp-row">
+        <div class="card cmp-card">
+          <span class="label">Vendor Expense (MTD)</span>
+          <div class="big num" id="ve-mtd">—</div>
+          <div class="row"><span>Last month same point</span><span id="ve-mom-d"></span></div>
+          <div class="row"><span>Last month full</span><span class="num" id="ve-lm-full"></span></div>
+        </div>
+        <div class="card cmp-card">
+          <span class="label">Sales vs Expense Ratio</span>
+          <div class="big num" id="ve-ratio">—</div>
+          <div class="row"><span>Vendor Expense ÷ Net Sales</span><span class="no-data" id="ve-ratio-note"></span></div>
+        </div>
+      </div>
     </section>
     <section class="block">
       <p class="eyebrow">Financial Status · Cash Balance</p>
@@ -298,6 +310,29 @@ function render(){
   if(cmpCI)cmpCI.destroy();
   var ms=D.monthlySeries;
   cmpCI=new Chart($('#cmpChart'),{type:'bar',data:{labels:ms.map(d=>d.month),datasets:[{label:RAW.asOf.substring(0,4),data:ms.map(d=>d.cur),backgroundColor:col,borderRadius:4,barPercentage:.7,categoryPercentage:.62}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+fmt(c.parsed.y)}}},scales:{x:{grid:{display:false},border:{display:false}},y:{grid:{color:css('--line-2')},border:{display:false},ticks:{callback:moneyTick,maxTicksLimit:4}}}}});
+
+  // ── Vendor Expense (지점 토글에 따라 변경) ──
+  if (RAW.vendorExpense) {
+    var veLoc = curLoc;
+    // Kimchi는 vendor expense 없음 — All로 표시
+    if (veLoc === 'Kimchi') veLoc = 'All';
+    var ve = RAW.vendorExpense[veLoc];
+    if (ve) {
+      $('#ve-mtd').textContent = fmtD(ve.mtd);
+      $('#ve-mom-d').innerHTML = deltaHTML(ve.mtd, ve.lastMonthSamePoint);
+      $('#ve-lm-full').textContent = fmt(ve.lastMonthFull);
+      // Sales vs Expense ratio
+      var salesMtd = D.month.mtd;
+      if (salesMtd > 0) {
+        var ratio = (ve.mtd / salesMtd * 100).toFixed(1);
+        $('#ve-ratio').textContent = ratio + '%';
+        $('#ve-ratio-note').textContent = fmt(ve.mtd) + ' ÷ ' + fmt(salesMtd);
+      } else {
+        $('#ve-ratio').textContent = '—';
+        $('#ve-ratio-note').textContent = '';
+      }
+    }
+  }
 }
 
 // ── 시작 ──
